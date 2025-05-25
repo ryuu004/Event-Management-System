@@ -6,8 +6,15 @@ use App\Core\Model;
 
 class User extends Model {
     public function create($data) {
-        $sql = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";
-        $params = [$data['username'], $data['email'], password_hash($data['password'], PASSWORD_DEFAULT), $data['role']];
+        $sql = "INSERT INTO users (first_name, last_name, student_number, email, password, role) VALUES (?, ?, ?, ?, ?, ?)";
+        $params = [
+            $data['first_name'],
+            $data['last_name'],
+            $data['student_number'],
+            $data['email'],
+            password_hash($data['password'], PASSWORD_DEFAULT),
+            $data['role']
+        ];
         return $this->query($sql, $params);
     }
 
@@ -25,5 +32,9 @@ class User extends Model {
 
     public function getParticipants() {
         return $this->findAll("SELECT id, username, email FROM users WHERE role = 'participant'");
+    }
+
+    public function findByStudentNumber($studentNumber) {
+        return $this->findOne("SELECT * FROM users WHERE student_number = ?", [$studentNumber]);
     }
 } 

@@ -71,7 +71,7 @@ class Event extends Model {
     }
 
     public function getEventParticipants($eventId) {
-        return $this->findAll("SELECT u.id, u.username, u.email, er.ticket_code, er.created_at as registration_date
+        return $this->findAll("SELECT u.id, u.username, u.first_name, u.last_name, u.email, er.ticket_code, er.created_at as registration_date
                               FROM event_registrations er
                               JOIN users u ON er.participant_id = u.id
                               WHERE er.event_id = ? AND er.status = 'active'", [$eventId]);
@@ -79,5 +79,11 @@ class Event extends Model {
 
     public function delete($id, $organizerId) {
         return $this->query("DELETE FROM events WHERE id = ? AND organizer_id = ?", [$id, $organizerId]);
+    }
+
+    public function getEventParticipantCount($eventId) {
+        $sql = "SELECT COUNT(*) as count FROM event_registrations WHERE event_id = ? AND status = 'active'";
+        $result = $this->findOne($sql, [$eventId]);
+        return $result ? $result['count'] : 0;
     }
 } 

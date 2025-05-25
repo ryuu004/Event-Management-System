@@ -18,7 +18,9 @@ class EventController extends Controller {
     public function index() {
         $events = $this->eventModel->getPublishedEvents();
         $joinedEventIds = [];
+        
         if (isset($_SESSION['user'])) {
+            // Get all events this user has joined
             $joinedEvents = $this->registrationModel->getParticipantEvents($_SESSION['user']['id']);
             $joinedEventIds = array_column($joinedEvents, 'id');
         }
@@ -144,6 +146,22 @@ class EventController extends Controller {
     public function register($id) {
         $user = $this->requireAuth(); // allow any logged-in user
 
+        // Get event details
+        $event = $this->eventModel->getEventById($id);
+        if (!$event) {
+            $_SESSION['error'] = 'Event not found.';
+            header('Location: /endama2/events');
+            exit;
+        }
+
+        // Capacity check
+        $participantCount = $this->eventModel->getEventParticipantCount($id);
+        if ($participantCount >= $event['capacity']) {
+            $_SESSION['error'] = 'Sorry, this event is already full!';
+            header('Location: /endama2/events');
+            exit;
+        }
+
         // Prevent double registration
         if ($this->registrationModel->isRegistered($id, $user['id'])) {
             $_SESSION['error'] = 'You have already joined this event.';
@@ -151,8 +169,47 @@ class EventController extends Controller {
             exit;
         }
 
-        $this->registrationModel->register($id, $user['id']);
-        $_SESSION['success'] = 'You have successfully joined the event!';
+        // Generate unique ticket code with retry mechanism
+        $maxAttempts = 5;
+        $attempt = 0;
+        $registrationSuccess = false;
+
+        while ($attempt < $maxAttempts && !$registrationSuccess) {
+            try {
+                // Generate a more unique ticket code using timestamp and random elements
+                $timestamp = substr(time(), -4); // Last 4 digits of timestamp
+                $random = substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 3); // 3 random letters
+                $ticketCode = 'SPCC' . $timestamp . $random;
+                
+                // Try to register with this ticket code
+                $registrationSuccess = $this->registrationModel->register($id, $user['id'], $ticketCode);
+                
+                if ($registrationSuccess) {
+                    $_SESSION['success'] = 'You have successfully joined the event!';
+                    $_SESSION['ticket_info'] = [
+                        'event_title' => $event['title'],
+                        'ticket_code' => $ticketCode,
+                        'price' => $event['price'],
+                        'event_date' => date('F d, Y', strtotime($event['event_date'])) . ' at ' . date('g:i A', strtotime($event['start_time'])),
+                        'venue' => $event['venue']
+                    ];
+                    break;
+                }
+            } catch (\Exception $e) {
+                // If duplicate ticket code, try again
+                if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
+                    $attempt++;
+                    continue;
+                }
+                // For other errors, throw the exception
+                throw $e;
+            }
+        }
+
+        if (!$registrationSuccess) {
+            $_SESSION['error'] = 'Failed to register for the event. Please try again.';
+        }
+        
         header('Location: /endama2/events');
         exit;
     }

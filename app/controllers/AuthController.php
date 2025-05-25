@@ -19,14 +19,22 @@ class AuthController extends Controller {
         }
 
         $data = [
-            'username' => $_POST['username'],
-            'email' => $_POST['email'],
+            'first_name' => trim($_POST['first_name']),
+            'last_name' => trim($_POST['last_name']),
+            'student_number' => trim($_POST['student_number']),
+            'email' => trim($_POST['email']),
             'password' => $_POST['password'],
-            'role' => $_POST['role']
+            'role' => 'participant'
         ];
 
+        if (!preg_match('/^\\d{9}$/', $data['student_number'])) {
+            return $this->json(['error' => 'Student number must be exactly 9 digits'], 400);
+        }
         if ($this->userModel->findByEmail($data['email'])) {
             return $this->json(['error' => 'Email already exists'], 400);
+        }
+        if ($this->userModel->findByStudentNumber($data['student_number'])) {
+            return $this->json(['error' => 'Student number already registered'], 400);
         }
 
         $this->userModel->create($data);
@@ -49,12 +57,15 @@ class AuthController extends Controller {
         session_start();
         $_SESSION['user'] = [
             'id' => $user['id'],
+            'first_name' => $user['first_name'],
+            'last_name' => $user['last_name'],
             'email' => $user['email'],
             'role' => $user['role']
         ];
         return $this->json([
             'user' => [
                 'id' => $user['id'],
+                'username' => $user['username'],
                 'email' => $user['email'],
                 'role' => $user['role']
             ]
