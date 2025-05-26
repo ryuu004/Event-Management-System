@@ -5,6 +5,7 @@ A PHP-based event management system with MVC architecture that allows organizers
 ---
 
 ## Table of Contents
+
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -19,6 +20,7 @@ A PHP-based event management system with MVC architecture that allows organizers
 ---
 
 ## Features
+
 - User Authentication (Organizer and Participant roles)
 - Event Creation and Management
 - Event Registration with Ticket Generation
@@ -26,12 +28,14 @@ A PHP-based event management system with MVC architecture that allows organizers
 - Role-based Access Control
 
 ## Requirements
+
 - PHP 7.4 or higher
 - MySQL 5.7 or higher
 - Composer
 - Apache/Nginx web server
 
 ## Installation
+
 1. **Clone the repository:**
    ```bash
    git clone <repository-url>
@@ -54,18 +58,22 @@ A PHP-based event management system with MVC architecture that allows organizers
 5. **Configure your web server** to point to the project's root directory (e.g., `/c:/xampp/htdocs/endama2`).
 
 ## Usage
+
 - Access the application via your local web server (e.g., `http://localhost/endama2`).
 - Register as an organizer or participant.
 - Organizers can create, update, and manage events.
 - Participants can browse and register for events.
 
 ## API Endpoints
+
 ### Authentication
+
 - `POST /auth/register` - Register a new user
 - `POST /auth/login` - Login user
 - `POST /auth/logout` - Logout user
 
 ### Events
+
 - `GET /events` - List all published events
 - `POST /events/create` - Create a new event (Organizer only)
 - `POST /events/update/{id}` - Update an event (Organizer only)
@@ -75,7 +83,9 @@ A PHP-based event management system with MVC architecture that allows organizers
 - `GET /events/participants/{id}` - View event participants (Organizer only)
 
 ## Database Structure
+
 ### Users Table
+
 - id (Primary Key)
 - username
 - email
@@ -84,6 +94,7 @@ A PHP-based event management system with MVC architecture that allows organizers
 - created_at
 
 ### Events Table
+
 - id (Primary Key)
 - title
 - description
@@ -98,6 +109,7 @@ A PHP-based event management system with MVC architecture that allows organizers
 - created_at
 
 ### Event Registrations Table
+
 - id (Primary Key)
 - event_id (Foreign Key)
 - participant_id (Foreign Key)
@@ -106,6 +118,7 @@ A PHP-based event management system with MVC architecture that allows organizers
 - created_at
 
 ## Security Features
+
 - Password Hashing
 - JWT-based Authentication
 - Role-based Authorization
@@ -113,11 +126,13 @@ A PHP-based event management system with MVC architecture that allows organizers
 - CORS Protection
 
 ## Troubleshooting
+
 - **Database connection errors:** Double-check your `.env` file for correct credentials.
 - **Composer issues:** Ensure Composer is installed and up to date.
 - **Web server errors:** Make sure your document root is set to the project directory.
 
 ## Contributing
+
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/YourFeature`)
 3. Commit your changes (`git commit -am 'Add new feature'`)
@@ -125,4 +140,5 @@ A PHP-based event management system with MVC architecture that allows organizers
 5. Create a new Pull Request
 
 ## License
+
 This project is open source. Add your preferred license here (e.g., MIT, GPL, etc.).

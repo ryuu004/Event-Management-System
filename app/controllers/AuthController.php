@@ -26,7 +26,19 @@ class AuthController extends Controller {
             'password' => $_POST['password'],
             'role' => 'participant'
         ];
-
+        $confirmPassword = $_POST['confirm_password'] ?? null;
+        // SPCC email validation
+        if (!preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]*spcc\\.edu\\.ph$/', $data['email'])) {
+            return $this->json(['error' => 'Please use your SPCC email address (e.g. tahari_rhyio@spcc.edu.ph).'], 400);
+        }
+        // Password length validation
+        if (strlen($data['password']) < 8) {
+            return $this->json(['error' => 'Password must be at least 8 characters long'], 400);
+        }
+        // Confirm password validation
+        if ($data['password'] !== $confirmPassword) {
+            return $this->json(['error' => 'Passwords do not match. Please re-enter.'], 400);
+        }
         if (!preg_match('/^\\d{9}$/', $data['student_number'])) {
             return $this->json(['error' => 'Student number must be exactly 9 digits'], 400);
         }
@@ -57,17 +69,18 @@ class AuthController extends Controller {
         session_start();
         $_SESSION['user'] = [
             'id' => $user['id'],
-            'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
             'email' => $user['email'],
-            'role' => $user['role']
+            'role' => $user['role'],
+            'first_name' => $user['first_name'],
+            'last_name' => $user['last_name']
         ];
         return $this->json([
             'user' => [
                 'id' => $user['id'],
-                'username' => $user['username'],
                 'email' => $user['email'],
-                'role' => $user['role']
+                'role' => $user['role'],
+                'first_name' => $user['first_name'],
+                'last_name' => $user['last_name']
             ]
         ]);
     }

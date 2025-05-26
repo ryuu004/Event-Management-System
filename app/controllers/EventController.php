@@ -139,6 +139,8 @@ class EventController extends Controller {
 
     public function delete($id) {
         $user = $this->requireAuth(['organizer']);
+        // Delete all registrations (tickets) for this event first
+        $this->registrationModel->deleteAllByEventId($id);
         $this->eventModel->delete($id, $user['id']);
         return $this->json(['message' => 'Event deleted successfully']);
     }
@@ -246,8 +248,8 @@ class EventController extends Controller {
     public function cancelRegistration($id) {
         $user = $this->requireAuth();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->registrationModel->cancelRegistration($id, $user['id']);
-            $_SESSION['success'] = 'Registration cancelled successfully!';
+            $this->registrationModel->deleteRegistration($id, $user['id']);
+            $_SESSION['success'] = 'Registration cancelled and ticket deleted successfully!';
             header('Location: /endama2/events/my-events');
             exit;
         } else {

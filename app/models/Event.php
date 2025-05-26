@@ -52,29 +52,38 @@ class Event extends Model {
     }
 
     public function getPublishedEvents() {
-        return $this->findAll("SELECT e.*, u.username as organizer_name 
-                              FROM events e 
-                              JOIN users u ON e.organizer_id = u.id 
-                              WHERE e.status = 'published'
-                              ORDER BY e.event_date ASC");
+        return $this->findAll("SELECT e.*, CONCAT(u.first_name, ' ', u.last_name) as organizer_name 
+            FROM events e 
+            JOIN users u ON e.organizer_id = u.id 
+            WHERE e.status = 'published'
+            ORDER BY e.event_date ASC");
     }
 
     public function getEventsByOrganizer($organizerId) {
         return $this->findAll("SELECT * FROM events WHERE organizer_id = ?", [$organizerId]);
     }
 
+    public function getAllEvents() {
+        return $this->findAll("SELECT e.*, CONCAT(u.first_name, ' ', u.last_name) as organizer_name 
+            FROM events e 
+            LEFT JOIN users u ON e.organizer_id = u.id 
+            ORDER BY e.created_at DESC");
+    }
+
     public function getEventById($id) {
-        return $this->findOne("SELECT e.*, u.username as organizer_name 
-                              FROM events e 
-                              JOIN users u ON e.organizer_id = u.id 
-                              WHERE e.id = ?", [$id]);
+        return $this->findOne("SELECT e.*, CONCAT(u.first_name, ' ', u.last_name) as organizer_name 
+            FROM events e 
+            LEFT JOIN users u ON e.organizer_id = u.id 
+            WHERE e.id = ?", [$id]);
     }
 
     public function getEventParticipants($eventId) {
-        return $this->findAll("SELECT u.id, u.username, u.first_name, u.last_name, u.email, er.ticket_code, er.created_at as registration_date
-                              FROM event_registrations er
-                              JOIN users u ON er.participant_id = u.id
-                              WHERE er.event_id = ? AND er.status = 'active'", [$eventId]);
+        return $this->findAll("SELECT u.id, u.first_name as name, u.email, 
+            er.ticket_code, er.created_at as registration_date 
+            FROM event_registrations er 
+            JOIN users u ON er.participant_id = u.id 
+            WHERE er.event_id = ? 
+            ORDER BY er.created_at DESC", [$eventId]);
     }
 
     public function delete($id, $organizerId) {

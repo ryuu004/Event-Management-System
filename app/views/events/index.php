@@ -7,58 +7,59 @@
     window.ticketInfo = <?php echo (!empty($_SESSION['ticket_info'])) ? json_encode($_SESSION['ticket_info']) : 'null'; ?>;
 </script>
 
-<!-- Hero Title with Modern Styling -->
-<div class="row">
-    <div class="col-12 text-center py-5" style="
-        background: linear-gradient(to bottom, rgba(13, 17, 38, 0.85), rgba(13, 17, 38, 0.65));
-        border-radius: 24px;
-        margin: 0 2px 3rem 2px;
-        position: relative;
-        overflow: hidden;
-    ">
-        <!-- Decorative elements -->
-        <div style="
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 50%, rgba(125, 214, 255, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 50%, rgba(224, 86, 253, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-        "></div>
-        
-        <h1 style="
-            font-family: 'Segoe UI', Arial, sans-serif;
-            font-size: 3.2rem;
-            font-weight: 900;
-            color: #ffffff;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.8rem;
-            line-height: 1.1;
-            text-shadow: 0 2px 20px rgba(0,0,0,0.2);
-            position: relative;
-        ">Upcoming Events</h1>
-        
-        <div style="
-            font-family: 'Segoe UI', Arial, sans-serif;
-            font-size: 1.25rem;
-            font-weight: 400;
-            color: rgba(255,255,255,0.85);
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.5;
-            position: relative;
-        ">Discover and join the latest happenings at SPCC</div>
+<!-- Modern Hero Header with Custom Cover Image for Upcoming Events -->
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="position-relative overflow-hidden py-5 px-4 rounded-4 shadow-sm text-center hero-gradient-card" style="
+            background: linear-gradient(120deg, rgba(248,249,250,0.80) 0%, rgba(243,232,255,0.75) 100%), url('/endama2/app/views/events/spcc cover.png') center center / cover no-repeat;
+            border: 1.5px solid #ede9fe;
+            min-height: 260px;
+        ">
+            <!-- Accent Bar -->
+            <div style="
+                position: absolute;
+                left: 40px;
+                top: 38px;
+                width: 6px;
+                height: 48px;
+                border-radius: 4px;
+                background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+                opacity: 0.7;
+                z-index: 1;
+            "></div>
+            <!-- Small Event Icon -->
+            <div class="mx-auto mb-2" style="position: relative; z-index:2;">
+                <i class="fas fa-calendar-alt" style="font-size:1.7rem; color:#7c3aed; background: #ede9fe; border-radius: 50%; padding: 8px 12px; box-shadow: 0 2px 8px rgba(124,58,237,0.07);"></i>
+            </div>
+            <h1 class="fw-bold mb-2" style="
+                color: #2c3e50;
+                font-size: 2.5rem;
+                letter-spacing: -1px;
+                position: relative;
+                z-index: 2;
+                display: inline-block;
+                margin-bottom: 0.5rem;
+            ">Upcoming Events</h1>
+            <p class="lead col-md-8 mx-auto mb-0" style="color: #4b5563; font-size: 1.1rem; position: relative; z-index: 2;">
+                Discover and join the latest happenings at SPCC
+            </p>
+        </div>
     </div>
 </div>
 
 <?php if (!empty($_SESSION['success'])): ?>
-    <div class="alert alert-success text-center"><?= htmlspecialchars($_SESSION['success']) ?></div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <?= htmlspecialchars($_SESSION['success']) ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     <?php unset($_SESSION['success']); ?>
 <?php endif; ?>
+
 <?php if (!empty($_SESSION['error'])): ?>
-    <div class="alert alert-danger text-center"><?= htmlspecialchars($_SESSION['error']) ?></div>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <?= htmlspecialchars($_SESSION['error']) ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     <?php unset($_SESSION['error']); ?>
 <?php endif; ?>
 
@@ -66,37 +67,110 @@
 
 <style>
 .event-card {
-    transform: translateY(0);
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
 }
 
 .event-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.25);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-.event-card:hover img {
-    filter: brightness(1) !important;
+.event-date-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
+    color: #fff;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-weight: 600;
+    box-shadow: 0 3px 10px rgba(124,58,237,0.08);
+    min-width: 60px;
+    text-align: center;
+    z-index: 2;
 }
 
-.event-card .btn {
-    transform: scale(1);
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+.event-date-badge .day {
+    font-size: 1.2rem;
+    line-height: 1;
+    display: block;
 }
 
-.event-card .btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(224, 86, 253, 0.3);
+.event-date-badge .month {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+.card-title {
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 1.1rem;
+}
+
+.card-text {
+    color: #4b5563;
+    margin-bottom: 1.2rem;
+}
+
+.event-detail {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.1rem;
+    color: #6c757d;
+}
+
+.event-detail i {
+    width: 16px;
+    margin-right: 8px;
+    color: #7c3aed;
+}
+
+.see-more-link {
+    color: #7c3aed;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.see-more-link:hover {
+    text-decoration: underline;
+}
+
+.price-tag {
+    font-weight: 700;
+    color: #2ecc71;
+    font-size: 1.2rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, rgb(79, 70, 229) 0%, rgb(147, 51, 234) 100%);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, rgb(67, 56, 202) 0%, rgb(126, 34, 206) 100%);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.btn-outline-primary {
+    color: #7c3aed;
+    border-color: #7c3aed;
+}
+
+.btn-outline-primary:hover {
+    background-color: #7c3aed;
+    border-color: #7c3aed;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 .event-item {
-    animation: fadeIn 0.6s ease-out forwards;
-    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
 }
 
 .event-item:nth-child(1) { animation-delay: 0.1s; }
@@ -105,6 +179,15 @@
 .event-item:nth-child(4) { animation-delay: 0.4s; }
 .event-item:nth-child(5) { animation-delay: 0.5s; }
 .event-item:nth-child(6) { animation-delay: 0.6s; }
+
+.event-card .card-body {
+    padding: 1.5rem 1.3rem 1.1rem 1.3rem;
+}
+
+.card-footer {
+    padding-top: 1.1rem;
+    padding-bottom: 1.1rem;
+}
 </style>
 
 <div class="row" id="eventsContainer">
@@ -114,123 +197,66 @@
     $isFull = $participantCount >= $event['capacity'];
     ?>
     <div class="col-md-4 mb-4 event-item">
-        <div class="card event-card h-100 position-relative" style="
-            border-radius: 16px;
-            overflow: hidden;
-            background: rgba(24, 28, 58, 0.9);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-            color: #fff;
-            will-change: transform;
-        ">
+        <div class="card event-card h-100 border-0 shadow-sm">
             <?php if (!empty($event['poster'])): ?>
             <div class="position-relative">
-                <img src="/endama2/<?= htmlspecialchars($event['poster']) ?>" class="card-img-top" alt="Event Poster" style="
-                    height: 240px;
-                    object-fit: cover;
-                    filter: brightness(0.9);
-                    transition: filter 0.3s ease;
-                ">
-                <!-- Date Box -->
-                <div class="position-absolute top-0 start-0 m-3 text-white rounded-lg px-3 py-2" style="
-                    background: rgba(13, 17, 38, 0.85);
-                    backdrop-filter: blur(4px);
-                    border: 1px solid rgba(255,255,255,0.1);
-                    min-width: 60px;
-                ">
-                    <div style="font-size:1.4rem;font-weight:700;line-height:1;">
-                        <?= date('d', strtotime($event['event_date'])) ?>
-                    </div>
-                    <div style="font-size:0.85rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.9;">
-                        <?= date('M', strtotime($event['event_date'])) ?>
-                    </div>
+                <img src="/endama2/<?= htmlspecialchars($event['poster']) ?>" class="card-img-top" alt="Event Poster" style="height: 200px; object-fit: cover;">
+                <div class="event-date-badge">
+                    <span class="day"><?= date('d', strtotime($event['event_date'])) ?></span>
+                    <span class="month"><?= date('M', strtotime($event['event_date'])) ?></span>
                 </div>
             </div>
             <?php endif; ?>
-            <div class="card-body pb-2">
-                <h5 class="card-title mb-2" style="
-                    font-weight: 700;
-                    font-size: 1.35rem;
-                    letter-spacing: -0.01em;
-                    line-height: 1.3;
-                    background: linear-gradient(90deg, #7ed6ff 0%, #e056fd 100%);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
-                ">
-                    <?= htmlspecialchars($event['title']) ?>
-                </h5>
-                <div class="mb-2" style="font-size:0.95rem;">
-                    <span style="color: #7ed6ff;">By: <?= htmlspecialchars($event['organizer_name'] ?? 'Organizer') ?></span>
-                </div>
-                <p class="card-text mb-3" style="
-                    font-size: 0.97rem;
-                    min-height: 38px;
-                    color: rgba(255,255,255,0.85);
-                    line-height: 1.5;
-                ">
-                    <?= htmlspecialchars(mb_strimwidth($event['description'], 0, 60, '...')) ?>
+            <div class="card-body">
+                <h5 class="card-title mb-2"><?= htmlspecialchars($event['title']) ?></h5>
+                <p class="card-text mb-3">
+                    <span class="desc-short">
+                        <?= htmlspecialchars(mb_strimwidth($event['description'], 0, 60, '...')) ?>
+                    </span>
+                    <?php if (mb_strlen($event['description']) > 60): ?>
+                        <span class="desc-full d-none"><?= htmlspecialchars($event['description']) ?></span>
+                        <a href="#" class="see-more-link" onclick="toggleDescription(this); return false;"> See More</a>
+                    <?php endif; ?>
                 </p>
-                <div class="mb-2" style="color: #7ed6ff; font-size: 0.97rem;">
-                    <i class="fas fa-clock me-2"></i>
-                    <?= date('g:i A', strtotime($event['start_time'])) ?> - <?= date('g:i A', strtotime($event['end_time'])) ?>
+                <div class="event-detail">
+                    <i class="far fa-clock"></i>
+                    <span><?= date('g:i A', strtotime($event['start_time'])) ?> - <?= date('g:i A', strtotime($event['end_time'])) ?></span>
                 </div>
-                <div class="mb-2" style="color: rgba(255,255,255,0.75);">
-                    <i class="fas fa-map-marker-alt" style="color: #e056fd;"></i>
-                    <span class="ms-2"><?= htmlspecialchars($event['venue']) ?></span>
+                <div class="event-detail">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span><?= htmlspecialchars($event['venue']) ?></span>
+                </div>
+                <div class="event-detail">
+                    <i class="fas fa-users"></i>
+                    <span><?= $participantCount ?> / <?= $event['capacity'] ?> participants</span>
                 </div>
             </div>
-            <div class="card-footer border-0 pt-0 pb-3 px-3" style="background: transparent;">
+            <div class="card-footer bg-white border-top pt-3">
                 <div class="d-flex justify-content-between align-items-center">
-                    <span class="fw-bold" style="
-                        font-size: 1.3rem;
-                        background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);
-                        -webkit-background-clip: text;
-                        -webkit-text-fill-color: transparent;
-                        background-clip: text;
-                    ">₱<?= number_format($event['price'], 2) ?></span>
+                    <span class="price-tag">₱<?= number_format($event['price'], 2) ?></span>
                     <?php if (isset($_SESSION['user'])): ?>
                         <?php if (in_array((int)$event['id'], array_map('intval', $joinedEventIds))): ?>
-                            <button class="btn btn-secondary btn-sm px-4 py-2 fw-bold" style="
-                                border-radius: 50px;
-                                font-weight: 700;
-                                font-size: 0.95rem;
-                                background: #888 !important;
-                                color: #fff !important;
-                                border: none;
-                                box-shadow: none;
-                                pointer-events: none;
-                                opacity: 0.85;
-                                cursor: not-allowed;
-                            " disabled>
-                                Already Joined
-                            </button>
+                            <span class="badge bg-secondary py-2 px-3">Already Joined</span>
                         <?php elseif ($isFull): ?>
-                            <button class="btn btn-danger btn-sm px-4 py-2 fw-bold" style="border-radius: 50px; cursor: not-allowed;" onclick="showFullCapacityModal()" disabled>
+                            <button class="btn btn-sm btn-outline-danger" onclick="showFullCapacityModal()" disabled>
                                 Full
                             </button>
                         <?php else: ?>
-                            <button onclick="showJoinModal(
-                                <?= $event['id'] ?>, 
-                                '<?= htmlspecialchars($event['title']) ?>', 
-                                '<?= htmlspecialchars($event['event_date']) ?>', 
-                                '<?= htmlspecialchars($event['venue']) ?>', 
-                                '₱' + <?= number_format($event['price'], 2) ?>.toFixed(2)
-                            )" class="btn btn-success btn-sm px-4 py-2" style="
-                                border-radius: 50px;
-                                font-weight: 600;
-                                font-size: 0.95rem;
-                                background: linear-gradient(90deg, #7ed6ff 0%, #e056fd 100%);
-                                border: none;
-                                box-shadow: 0 2px 10px rgba(224, 86, 253, 0.2);
-                                transition: transform 0.2s ease, box-shadow 0.2s ease;
-                            ">
-                                Join
+                            <button 
+                                onclick="showJoinModal(
+                                    <?= $event['id'] ?>, 
+                                    '<?= htmlspecialchars($event['title']) ?>', 
+                                    '<?= htmlspecialchars(date('F d, Y', strtotime($event['event_date']))) ?>', 
+                                    '<?= htmlspecialchars($event['venue']) ?>', 
+                                    '₱<?= number_format($event['price'], 2) ?>'
+                                )" 
+                                class="btn btn-primary btn-sm"
+                            >
+                                Join Event
                             </button>
                         <?php endif; ?>
+                    <?php else: ?>
+                        <a href="/endama2/auth/login" class="btn btn-outline-primary btn-sm">Login to Join</a>
                     <?php endif; ?>
                 </div>
             </div>
@@ -240,46 +266,40 @@
 </div>
 
 <?php if (empty($events)): ?>
-<div class="text-center">
-    <p>No events found.</p>
+<div class="text-center py-5">
+    <div class="py-5">
+        <i class="fas fa-calendar-times fa-4x text-muted mb-3"></i>
+        <h3 class="text-muted">No events found</h3>
+        <p class="text-muted">Check back later for upcoming events</p>
+    </div>
 </div>
 <?php endif; ?>
 
 <!-- Join Event Confirmation Modal -->
 <div class="modal fade" id="joinEventModal" tabindex="-1" aria-labelledby="joinEventModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="
-            background: rgba(24, 28, 58, 0.95);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            color: #fff;
-        ">
-            <div class="modal-header border-bottom border-light border-opacity-10">
+        <div class="modal-content">
+            <div class="modal-header">
                 <h5 class="modal-title" id="joinEventModalLabel">Join Event</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p class="mb-0">Do you want to join this event?</p>
-                <h4 class="mt-2 mb-3 event-title" style="
-                    background: linear-gradient(90deg, #7ed6ff 0%, #e056fd 100%);
+                <h4 class="mt-2 mb-3 event-title fw-bold" style="
+                    background: linear-gradient(135deg, rgb(79, 70, 229) 0%, rgb(147, 51, 234) 100%);
                     -webkit-background-clip: text;
                     -webkit-text-fill-color: transparent;
                     background-clip: text;
                 "></h4>
                 <div class="event-details">
-                    <p class="mb-2"><i class="fas fa-calendar-alt text-info me-2"></i> <span class="event-date"></span></p>
+                    <p class="mb-2"><i class="fas fa-calendar-alt text-purple me-2" style="color: #7c3aed;"></i> <span class="event-date"></span></p>
                     <p class="mb-2"><i class="fas fa-map-marker-alt text-danger me-2"></i> <span class="event-venue"></span></p>
-                    <p class="mb-0"><i class="fas fa-tag text-warning me-2"></i> <span class="event-price"></span></p>
+                    <p class="mb-0"><i class="fas fa-tag text-success me-2"></i> <span class="event-price"></span></p>
                 </div>
             </div>
-            <div class="modal-footer border-top border-light border-opacity-10">
+            <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <a href="#" class="btn btn-primary join-event-btn" style="
-                    background: linear-gradient(90deg, #7ed6ff 0%, #e056fd 100%);
-                    border: none;
-                ">Join Event</a>
+                <a href="#" class="btn btn-primary join-event-btn">Join Event</a>
             </div>
         </div>
     </div>
@@ -288,60 +308,41 @@
 <!-- Success Modal -->
 <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="
-            background: rgba(24, 28, 58, 0.95);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            color: #fff;
-        ">
-            <div class="modal-header border-bottom border-light border-opacity-10">
+        <div class="modal-content">
+            <div class="modal-header">
                 <h5 class="modal-title" id="successModalLabel">
                     <i class="fas fa-check-circle text-success me-2"></i>
                     Registration Successful!
                 </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center py-4">
                 <div class="mb-4">
-                    <i class="fas fa-ticket-alt text-info" style="font-size: 3.5rem;"></i>
+                    <i class="fas fa-ticket-alt" style="font-size: 3.5rem; color: #7c3aed;"></i>
                 </div>
-                <h4 class="success-event-title mb-4" style="
-                    background: linear-gradient(90deg, #7ed6ff 0%, #e056fd 100%);
+                <h4 class="success-event-title mb-4 fw-bold" style="
+                    background: linear-gradient(135deg, rgb(79, 70, 229) 0%, rgb(147, 51, 234) 100%);
                     -webkit-background-clip: text;
                     -webkit-text-fill-color: transparent;
                     background-clip: text;
                 "></h4>
                 
-                <div class="ticket-info p-4 mb-4" style="
-                    background: rgba(255,255,255,0.1);
-                    border-radius: 12px;
-                    border: 1px solid rgba(255,255,255,0.2);
-                ">
+                <div class="ticket-info p-4 mb-4 border rounded bg-light">
                     <div class="mb-3">
                         <h5 class="mb-3">Your Ticket Information</h5>
-                        <div class="ticket-code mb-2" style="
+                        <div class="ticket-code mb-2 p-3 bg-white border rounded text-center" style="
                             font-family: 'Courier New', monospace;
-                            font-size: 2rem;
+                            font-size: 1.8rem;
                             font-weight: bold;
                             letter-spacing: 2px;
-                            color: #7ed6ff;
-                            padding: 10px;
-                            background: rgba(0,0,0,0.2);
-                            border-radius: 8px;
-                            margin: 15px 0;
+                            color: #7c3aed;
                         "></div>
-                        <div class="event-price" style="
-                            font-size: 1.2rem;
-                            color: #FFD700;
-                            font-weight: bold;
-                        "></div>
+                        <div class="event-price text-success fw-bold fs-5"></div>
                     </div>
                     
                     <div class="event-details text-start">
                         <p class="mb-2">
-                            <i class="fas fa-calendar-alt text-info me-2"></i>
+                            <i class="fas fa-calendar-alt me-2" style="color: #7c3aed;"></i>
                             <span class="event-date"></span>
                         </p>
                         <p class="mb-0">
@@ -351,11 +352,7 @@
                     </div>
                 </div>
 
-                <div class="alert alert-warning" role="alert" style="
-                    background: rgba(255, 193, 7, 0.1);
-                    border: 1px solid rgba(255, 193, 7, 0.2);
-                    color: #ffd700;
-                ">
+                <div class="alert alert-warning" role="alert">
                     <i class="fas fa-exclamation-triangle me-2"></i>
                     <strong>Important Reminder:</strong>
                     <ul class="mb-0 mt-2 text-start">
@@ -366,13 +363,8 @@
                     </ul>
                 </div>
             </div>
-            <div class="modal-footer border-top border-light border-opacity-10 justify-content-center">
-                <button type="button" class="btn btn-primary px-4" data-bs-dismiss="modal" style="
-                    background: linear-gradient(90deg, #7ed6ff 0%, #e056fd 100%);
-                    border: none;
-                    border-radius: 50px;
-                    font-weight: 600;
-                ">Got it!</button>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-primary px-4" data-bs-dismiss="modal">Got it!</button>
             </div>
         </div>
     </div>
@@ -381,15 +373,15 @@
 <!-- Full Capacity Modal -->
 <div class="modal fade" id="fullCapacityModal" tabindex="-1" aria-labelledby="fullCapacityModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="background: rgba(24, 28, 58, 0.95); color: #fff;">
+    <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="fullCapacityModalLabel">Event Full</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body text-center">
-        <i class="fas fa-frown fa-3x text-warning mb-3"></i>
+        <i class="fas fa-users-slash fa-3x text-danger mb-3"></i>
         <h4>Sorry, this event has reached its maximum capacity.</h4>
-        <p>We appreciate your interest. Please check out our other events!</p>
+        <p class="text-muted">We appreciate your interest. Please check out our other events!</p>
       </div>
       <div class="modal-footer justify-content-center">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Okay</button>
@@ -399,6 +391,21 @@
 </div>
 
 <script>
+function toggleDescription(link) {
+    const cardText = link.closest('.card-text');
+    const shortDesc = cardText.querySelector('.desc-short');
+    const fullDesc = cardText.querySelector('.desc-full');
+    if (fullDesc.classList.contains('d-none')) {
+        shortDesc.style.display = 'none';
+        fullDesc.classList.remove('d-none');
+        link.textContent = ' See Less';
+    } else {
+        shortDesc.style.display = '';
+        fullDesc.classList.add('d-none');
+        link.textContent = ' See More';
+    }
+}
+
 function filterEvents() {
     const searchText = document.getElementById('searchEvents').value.toLowerCase();
     const events = document.getElementsByClassName('event-item');
@@ -406,7 +413,7 @@ function filterEvents() {
     Array.from(events).forEach(event => {
         const title = event.querySelector('.card-title').textContent.toLowerCase();
         const description = event.querySelector('.card-text').textContent.toLowerCase();
-        const venue = event.querySelector('.fa-map-marker-alt').nextSibling.textContent.toLowerCase();
+        const venue = event.querySelector('.fa-map-marker-alt').nextElementSibling.textContent.toLowerCase();
         
         if (title.includes(searchText) || description.includes(searchText) || venue.includes(searchText)) {
             event.style.display = '';
@@ -430,14 +437,6 @@ function showJoinModal(eventId, title, date, venue, price) {
     bsModal.show();
 }
 
-function showSuccessModal(title, ticketCode, price, date, venue) {
-    const modal = document.getElementById('successModal');
-    modal.querySelector('.success-event-title').textContent = title;
-    modal.querySelector('.ticket-code').textContent = ticketCode;
-    modal.querySelector('.ticket-code-reminder').textContent = ticketCode;
-    modal.querySelector('.event-price').textContent = `Entrance Fee: ${price}`
-}
-
 function showFullCapacityModal() {
     const modal = new bootstrap.Modal(document.getElementById('fullCapacityModal'));
     modal.show();
@@ -458,7 +457,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const bsModal = new bootstrap.Modal(modal);
             bsModal.show();
         }
-        // Optionally clear the session variables via AJAX or on next page load
     }
 });
 </script>

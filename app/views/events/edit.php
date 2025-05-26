@@ -2,40 +2,39 @@
 
 <style>
 .edit-event-form {
-    background: rgba(24, 28, 58, 0.95);
+    background: #fff;
     border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    color: #fff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    color: #333;
 }
 
 .form-control, .form-select {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    color: #333;
+    border-radius: 8px;
     transition: all 0.3s ease;
 }
 
 .form-control:focus, .form-select:focus {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
-    color: #fff;
-    box-shadow: 0 0 0 0.25rem rgba(126, 214, 255, 0.15);
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+    color: #333;
 }
 
 .form-control::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: #a0aec0;
 }
 
 .form-label {
-    color: rgba(255, 255, 255, 0.9);
+    color: #2c3e50;
     font-weight: 500;
     margin-bottom: 0.5rem;
 }
 
 .section-title {
-    background: linear-gradient(45deg, #7ed6ff, #e056fd);
+    background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -44,22 +43,24 @@
 }
 
 .submit-btn {
-    background: linear-gradient(45deg, #7ed6ff, #e056fd);
+    background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
     border: none;
     padding: 12px 25px;
-    border-radius: 50px;
+    border-radius: 8px;
     font-weight: 600;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    color: #fff;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .submit-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(224, 86, 253, 0.4);
+    box-shadow: 0 5px 15px rgba(124,58,237,0.15);
+    color: #fff;
 }
 
 .current-poster {
     border-radius: 8px;
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    border: 2px solid #e2e8f0;
     transition: transform 0.3s ease;
 }
 
@@ -145,7 +146,7 @@
                             </div>
 
                             <div class="d-flex justify-content-end gap-2">
-                                <a href="/endama2/events/manage" class="btn btn-outline-light px-4">Cancel</a>
+                                <a href="/endama2/events/manage" class="btn btn-outline-secondary px-4" style="border-radius:8px;">Cancel</a>
                                 <button type="submit" class="btn submit-btn px-4">Update Event</button>
                             </div>
                         </div>

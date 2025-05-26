@@ -1,106 +1,126 @@
 <!-- Add custom styles for auth pages -->
 <style>
 .auth-page {
-    min-height: calc(100vh - 76px);
+    min-height: 100vh;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: #f5f7fa;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
 }
 
 .auth-container {
-    background: rgba(24, 28, 58, 0.95);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 24px;
-    padding: 2.5rem;
+    background: #fff;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
+    padding: 2.5rem 3.5rem;
     width: 100%;
-    max-width: 420px;
-    margin: 0 auto;
-    color: #fff;
-    opacity: 0;
-    animation: simpleFade 0.3s ease-out forwards;
-}
-
-@keyframes simpleFade {
-    to {
-        opacity: 1;
-    }
+    max-width: 500px;
+    margin: 76px auto 0;
+    color: #333;
 }
 
 .auth-title {
     text-align: center;
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    background: linear-gradient(90deg, #7ed6ff, #e056fd);
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 2.5rem;
+    color: #6c5ce7;
+    background: linear-gradient(45deg, #6c5ce7, #a29bfe);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .form-control {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    color: #fff;
-    padding: 0.8rem 1.2rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #333;
+    padding: 0.9rem 1.2rem;
+    font-size: 1rem;
     transition: all 0.3s ease;
+    height: 50px;
+    width: 100%;
 }
 
 .form-control:focus {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 0 0 0.25rem rgba(126, 214, 255, 0.15);
-    color: #fff;
+    background: #fff;
+    border-color: #6c5ce7;
+    box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
+    outline: none;
 }
 
 .form-control::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: #a0aec0;
 }
 
 .form-label {
-    color: rgba(255, 255, 255, 0.9);
+    color: #2d3748;
     font-weight: 500;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    display: block;
 }
 
 .auth-btn {
-    background: linear-gradient(90deg, #7ed6ff, #e056fd);
+    background: linear-gradient(45deg, #6c5ce7, #a29bfe);
     border: none;
-    border-radius: 12px;
+    border-radius: 8px;
     color: #fff;
     font-weight: 600;
-    padding: 0.8rem 1.5rem;
+    padding: 0.9rem 1.5rem;
     width: 100%;
-    margin-top: 1rem;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-top: 2rem;
+    font-size: 1.1rem;
+    height: 55px;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .auth-btn:hover {
+    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(224, 86, 253, 0.4);
 }
 
 .auth-link {
-    color: #7ed6ff;
+    color: #6c5ce7;
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: color 0.2s;
+    font-weight: 500;
 }
 
 .auth-link:hover {
-    color: #e056fd;
+    color: #5d4aeb;
+    text-decoration: underline;
 }
 
 .alert {
-    background: rgba(220, 53, 69, 0.2);
-    border: 1px solid rgba(220, 53, 69, 0.3);
-    color: #fff;
+    background: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.mb-4 {
+    margin-bottom: 2rem !important;
 }
 
 body.auth-no-scroll {
     overflow: hidden !important;
+}
+
+.text-center.mt-4 {
+    margin-top: 2rem !important;
 }
 </style>
 

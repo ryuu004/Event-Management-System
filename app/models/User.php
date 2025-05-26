@@ -23,15 +23,15 @@ class User extends Model {
     }
 
     public function findById($id) {
-        return $this->findOne("SELECT id, username, email, role FROM users WHERE id = ?", [$id]);
+        return $this->findOne("SELECT id, email, role FROM users WHERE id = ?", [$id]);
     }
 
-    public function getOrganizers() {
-        return $this->findAll("SELECT id, username, email FROM users WHERE role = 'organizer'");
+    public function findOrganizers() {
+        return $this->findAll("SELECT id, email, first_name, last_name FROM users WHERE role = 'organizer'");
     }
 
-    public function getParticipants() {
-        return $this->findAll("SELECT id, username, email FROM users WHERE role = 'participant'");
+    public function findParticipants() {
+        return $this->findAll("SELECT id, email, first_name, last_name FROM users WHERE role = 'participant'");
     }
 
     public function findByStudentNumber($studentNumber) {
